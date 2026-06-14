@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: mariadb-deployment
+    labels:
+        app: mariadb-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: mariadb-service
+    template:
+        metadata:
+            labels:
+                app: mariadb-service
+        spec:
+            containers:
+                - name: mariadb-container
+                  image: mariadb:11.8.6
+                  ports:
+                      - containerPort: 3306
+                  env:
+                      - name: MARIADB_ROOT_PASSWORD
+                        value: "root123456"
+                      - name: MARIADB_DATABASE
+                        value: "sistema_supermercado_db"
+
+                  volumeMounts:
+                      - name: mariadb-storage
+                        mountPath: /var/lib/mysql
+                      - name: init-script-volume
+                        mountPath: /docker-entrypoint-initdb.d
+
+            volumes:
+                - name: mariadb-storage
+                  persistentVolumeClaim:
+                      claimName: mariadb-pvc
+                - name: init-script-volume
+                  configMap:
+                      name: mariadb-init-script

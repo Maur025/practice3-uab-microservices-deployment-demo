@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: people-deployment
+    labels:
+        app: people-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: people-service
+    template:
+        metadata:
+            labels:
+                app: people-service
+        spec:
+            containers:
+                - name: people-node
+                  image: people-service:latest
+                  imagePullPolicy: Never
+                  ports:
+                      - containerPort: 7802
+                  env:
+                      - name: NODE_ENV
+                        value: "production"
+                      - name: SERVER_APP_PORT
+                        value: "7802"
+                      - name: DB_HOST
+                        value: "mariadb-service"
+                      - name: DB_PORT
+                        value: "3306"
+                      - name: DB_USER
+                        value: "root"
+                      - name: DB_PASSWORD
+                        value: "root123456"
+                      - name: DB_NAME
+                        value: "sistema_supermercado_db"
+                      - name: SERVER_REDIRECTION
+                        value: "PROD"
