@@ -21,10 +21,38 @@ sleep 10
 
 cd ..
 
+cd inventory/
+
+kubectl apply -f inventory-deployment.yaml
+kubectl apply -f inventory-service.yaml
+
+cd ..
+
+cd payment/
+
+kubectl apply -f payment-deployment.yaml
+kubectl apply -f payment-service.yaml
+
+cd ..
+
 cd people/
 
 kubectl apply -f people-deployment.yaml
 kubectl apply -f people-service.yaml
+
+cd ..
+
+cd purchase/
+
+kubectl apply -f purchase-deployment.yaml
+kubectl apply -f purchase-service.yaml
+
+cd ..
+
+cd sale/
+
+kubectl apply -f sale-deployment.yaml
+kubectl apply -f sale-service.yaml
 
 cd ..
 
