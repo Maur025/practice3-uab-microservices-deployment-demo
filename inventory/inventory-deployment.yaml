@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: inventory-deployment
+    labels:
+        app: inventory-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: inventory-service
+    template:
+        metadata:
+            labels:
+                app: inventory-service
+        spec:
+            containers:
+                - name: inventory-node
+                  image: inventory-service:latest
+                  imagePullPolicy: Never
+                  ports:
+                      - containerPort: 7803
+                  env:
+                      - name: NODE_ENV
+                        value: "production"
+                      - name: SERVER_APP_PORT
+                        value: "7803"
+                      - name: DB_HOST
+                        value: "mariadb-service"
+                      - name: DB_PORT
+                        value: "3306"
+                      - name: DB_USER
+                        value: "root"
+                      - name: DB_PASSWORD
+                        value: "root123456"
+                      - name: DB_NAME
+                        value: "sistema_supermercado_db"
+                      - name: SERVER_REDIRECTION
+                        value: "PROD"

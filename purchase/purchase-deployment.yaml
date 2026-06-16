@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: purchase-deployment
+    labels:
+        app: purchase-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: purchase-service
+    template:
+        metadata:
+            labels:
+                app: purchase-service
+        spec:
+            containers:
+                - name: purchase-node
+                  image: purchase-service:latest
+                  imagePullPolicy: Never
+                  ports:
+                      - containerPort: 7801
+                  env:
+                      - name: NODE_ENV
+                        value: "production"
+                      - name: SERVER_APP_PORT
+                        value: "7801"
+                      - name: DB_HOST
+                        value: "mariadb-service"
+                      - name: DB_PORT
+                        value: "3306"
+                      - name: DB_USER
+                        value: "root"
+                      - name: DB_PASSWORD
+                        value: "root123456"
+                      - name: DB_NAME
+                        value: "sistema_supermercado_db"
+                      - name: SERVER_REDIRECTION
+                        value: "PROD"
