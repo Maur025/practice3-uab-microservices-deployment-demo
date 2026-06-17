@@ -6,6 +6,7 @@ alias kubectl="minikube kubectl --"
 
 echo "Deploying application to production environment..."
 
+kubectl rollout restart deployment company-deployment
 kubectl rollout restart deployment inventory-deployment
 kubectl rollout restart deployment payment-deployment
 kubectl rollout restart deployment people-deployment

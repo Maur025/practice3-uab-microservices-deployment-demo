@@ -21,6 +21,13 @@ sleep 10
 
 cd ..
 
+cd company/
+
+kubectl apply -f company-deployment.yaml
+kubectl apply -f company-service.yaml
+
+cd ..
+
 cd inventory/
 
 kubectl apply -f inventory-deployment.yaml
